@@ -1,4 +1,6 @@
-<?php include 'classes.php';?>
+<?php 
+session_start();
+include 'classes.php';?>
 <!--
 Author: w3layouts
 Author URL: http://w3layouts.com
@@ -44,7 +46,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <div class="container">
             <div class="baner-info-w3ls text-left">
-                <h1><a href="index.html">Thulani Mashiane</a></h1>
+                <h4><a href="index.php">Thulani Mashiane</a></h4>
                 <h6 class="mx-auto mt-4">VELOCITY Developer Assesment:</br> Mars Rover</h6>
                 <a class="btn btn-primary mt-lg-5 mt-3 agile-link-bnr scroll" href="#about" role="button">Get Started</a>
                 <div class="banner-high-lights text-left">
@@ -107,8 +109,12 @@ $boundsCheck =false;
 $startCheck =false;
 $directionsCheck =false; 
 
-$RoverCollection = array();
-$MaxNumofRovers=0;
+if(isset($_SESSION['RoverCollection']))
+{
+	unset($_SESSION['RoverCollection']);
+}else{
+	//echo "I get here";
+	$_SESSION['RoverCollection'] = array();	
 
 
 	 //RedIn File & Check Input
@@ -173,14 +179,14 @@ $MaxNumofRovers=0;
 						
 					}
 	
-					echo "</br></br>";
+					echo "</br>";
 			}
 		
 		    //Close myfile
 			fclose($myfile);
 			
 		}
-
+}
 function checkbounds($bounds)
 {
 
@@ -287,10 +293,11 @@ function  initializeRover($graphSize,$startArray,$instructionsString )
 	$rover->sety($startArray[1]);
 	$rover->setdirection($startArray[2]);	
 	
-	echo "</br>Rover succesfully loaded. The initial position: </br>";
+	echo "</br>Rover succesfully loaded. <h5> The initial position:</h5> ";
 	$rover->display();
 	
-	processMoves($rover,$instructionsString);
+	array_push( $_SESSION['RoverCollection'],processMoves($rover,$instructionsString));
+	
 	
 }
 
@@ -299,7 +306,7 @@ function processMoves($rover,$move_instructions)
 
 	for($i=0; $i<strlen($move_instructions); $i++)
 	{
-			   		   		
+	         echo ($i+1)." The move ".$move_instructions[$i]."  results in position:  ";		   		   		
 	   		if(strcmp($move_instructions[$i],"L")==0 || strcmp($move_instructions[$i],"R")==0)
 	   		{
 				$rover->switchDirection($move_instructions[$i]);
@@ -309,9 +316,9 @@ function processMoves($rover,$move_instructions)
 			}
    
    }
-	echo "</br>Rover Final location </br>";
+	echo "</br><h5>Rover Final location:</h5> ";
 	$rover->display();
-
+return($rover);
 }
 
 ?>
