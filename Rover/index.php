@@ -121,33 +121,35 @@ if(isset($_SESSION['RoverCollection']))
 		if  (isset($_POST["inputFile"]))
 		{
 			$inputText = $_POST["inputFile"];
-			
+				//Read in the File
 			$myfile = fopen($inputText, "r") or die("Unable to open file!");
 			
-			
-			
-			//Read in the File
+			//Read in first line of file
 			$graphSize= explode(" ",trim(fgets($myfile)));
 			
-			//Read in first line of file
 			
+			//Check is the formate of the bounds is correct
 			$boundsCheck = checkbounds($graphSize);
 			
-			$MaxNumofRovers = $graphSize[0]*$graphSize[1];
+			
 			$count=0;
 	
 			while(!feof($myfile)) 
 			{
+				
+				
 			//to check for blank lines 
-			$line = fgets($myfile);
-			
-					if(!(strlen($line)<1))
+			$nextline = trim(fgets($myfile));
+		
+		       
+					if(!(strlen($nextline)<1))
 					{
 							//This means starting position of a rover
 							if (($count%2) ==0)
 						{
 									
-							$startArray = explode(" ",trim(fgets($myfile)));
+							$startArray = explode(" ",$nextline);
+							 
 							 if ($boundsCheck)
 							 {
 							 	 $startCheck =checkStartPosition( $startArray, $graphSize);
@@ -158,7 +160,7 @@ if(isset($_SESSION['RoverCollection']))
 						}else
 						{
 							//check the movement instructions
-					 		$instructionsString = trim(fgets($myfile));
+					 		$instructionsString = trim($nextline);
 								if($startCheck)
 								{
 									
@@ -222,7 +224,15 @@ function checkbounds($bounds)
 		
 function checkStartPosition($arrayStart,$arrayBounds)
 {
-	
+	   
+	      
+	   if(sizeof($arrayStart) !=3)
+	   {
+	   	  echo "There is an error with the start co ordninates";
+	   	  return FALSE;
+	   }else{
+	   	
+	   
 			//Check if the start position is in bounds
 		  if( (($arrayStart[0] < $arrayBounds[0] ) && ($arrayStart[1] < $arrayBounds[1]))  )
 		  {
@@ -261,7 +271,7 @@ function checkStartPosition($arrayStart,$arrayBounds)
 		  {
 		  		echo "The start position entered is not with in the bound of the grid. Please check your input and try again.";
 		  }
-			
+	}	
 			
 		return false;
 	

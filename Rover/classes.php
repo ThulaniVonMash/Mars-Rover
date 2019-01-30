@@ -81,7 +81,7 @@ class Rover
 				        {
 						    if($this->bounds["y"]< ($this->gety()+1))
 					        {
-								echo "</br>Attempting to make an illegal move. Rover has reached the end of the grid. </br>";
+								echo "</br>Attempting to make an illigal move. Rover has reached the end of the grid. </br>";
 												
 							}else
 							{
@@ -99,7 +99,7 @@ class Rover
 			  
 				  	   if($this->bounds["x"]< ($this->getx()+1))
 				        {
-							echo "</br>Attempting to make an illegal move. Rover has reached the end of the grid. </br>";
+							echo "</br>Attempting to make an illigal move. Rover has reached the end of the grid. </br>";
 											
 						}else{
 				            $this->setx($this->getx()+1);
@@ -115,7 +115,7 @@ class Rover
 				        
 				    	if(0 > ($this->gety()-1))
 				        {
-							echo "</br>Attempting to make an illegal move. Rover has reached the end of the grid. </br>";
+							echo "</br>Attempting to make an illigal move. Rover has reached the end of the grid. </br>";
 						
 						}else{
 							$this->sety($this->gety()-1);
@@ -131,7 +131,7 @@ class Rover
 			        
 				         if(0 > ($this->getx()-1))
 				        {
-							echo "</br>Attempting to make an illegal move. Rover has reached the end of the grid. </br>";
+							echo "</br>Attempting to make an illigal move. Rover has reached the end of the grid. </br>";
 						
 						}else {
 				             $this->setx($this->getx()-1);
